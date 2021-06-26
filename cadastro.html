@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pagina - Cadastro</title>
+        <script src="./javascript/cadastro.js"></script>
+    </head>
+
+    <body onload="carregarLista()">
+        <h1>Cadastrar Produtos</h1>
+
+        <a href="lista.html">Produtos</a>
+        <br>
+        
+        <label for="cod">Código Produtos:</label>
+        <input type="number" disabled name="cod" id="cod">
+        <br>
+        <label for="nome">Nome Produto:</label>
+        <input required type="text" name="nome" id="nome">
+        <br>
+        <label for="unid">Unidade:</label>
+        <select id="unid">
+            <option select value="">Vazio</option>
+            <option value="un">Unidade</option>
+            <option value="kg">Quiligrama</option>
+            <option value="lt">Litro</option>
+            <option value="mt">Metro</option>
+            <option value="pc">Pacote</option>
+        </select>
+        <br>
+        <label for="quant">Quantidade:</label>
+        <input required type="number" name="quant" id="quant">
+        <br>
+        <label for="codBarras">Código de Barras:</label>
+        <input type="number" name="codBarras" id="codBarras" placeholder="1234567891234" min="9999999999999" max="9999999999999">
+        <br>
+        <label for="ativo">Ativo:</label>
+        <input type="checkbox" name="ativo" id="ativo">
+        <br>
+        <button onclick="salvar()" >Salvar</button>
+        <button onclick="novo()" >Novo</button>
+        <button onclick="excluir()" >Excluir</button>
+       
+        <table>
+            <thead>
+                <tr>
+                    <th>Código Produto</th>
+                    <th>Nome Produto</th>
+                    <th>Unidade</th>
+                    <th>Quantidade necessário</th>
+                    <th>Quantidade comprado</th>
+                    <th>Coletado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="produtosCadastro">
+                
+            </tbody>
+        </table>
+    </body>
+   
+</html>
