@@ -1,24 +1,32 @@
-// linha += `<tr>
-//   <td>${cod}</td>
-//   <td>${nome}</td>
-//   <td>${unid}</td>
-//   <td>${quant}</td>
-//   <td>${codBarras}</td>
-//   <td>${ativo}</td>
-//   <td> <button onclick="carregarProdutos(${cod})">Editar</button></td>
-//   </tr>`;
-
-let armazenamento = JSON.parse(localStorage.getItem('cadProdutos'))
+let armazenamento = JSON.parse(localStorage.getItem('listaCompras'))
 armazenamento.forEach(element => {
   var corpoTabela = document.getElementById('produtosLista')
-  var linha = `<tr>
-                <td>${element.cod}</td>
-                <td>${element.nome}</td>
-                <td>${element.unid}</td>
-                <td>${element.quant}</td>
-                <td>${element.codBarras}</td>
-                <td>${element.ativo}</td>
-                <td> <button onclick="carregarProdutos(${element.cod})">Editar</button></td>
-              </tr>`;
-  corpoTabela.innerHTML += linha
-});
+    if(element.ativo === true) {
+      let inputId = "inputCodigo" + element.cod
+      let checkboxId = "checkboxCodigo" + element.cod
+      var linha = `<tr>
+                      <td>${element.cod}</td>
+                      <td>${element.nome}</td>
+                      <td>${element.unid}</td>
+                      <td>${element.quant}</td>
+                      <td><input type="number" id="${inputId}" onchange="atualizaValor(${element.cod}, ${element.quant})"></td>
+                      <td><input type="checkbox" disabled id="${checkboxId}"></td>
+                      <td> <button onclick="">Editar</button></td>
+                  </tr>`
+      corpoTabela.innerHTML += linha
+    }
+})
+
+function atualizaValor(cod, quantidade) {
+  let input
+  let checkbox
+  for(let x = 0; x < armazenamento.length; x++) {
+    if(armazenamento[x].cod === cod) {
+      input = document.getElementById('inputCodigo' + armazenamento[x].cod)
+      checkbox = document.getElementById('checkboxCodigo' + armazenamento[x].cod)
+    }
+  }
+  if(Number(input.value) >= Number(quantidade)) {
+    checkbox.checked = true
+  }
+}

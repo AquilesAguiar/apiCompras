@@ -22,7 +22,7 @@ var controleProdutos = {
         localStorage.setItem('listaProdutos',JSON.stringify(this.listaProdutos))
     },
     SetlistaCompras:function(){
-        localStorage.setItem('SetlistaCompras',JSON.stringify(this.listaProdutos))
+        localStorage.setItem('listaCompras',JSON.stringify(this.listaProdutos))
     },
     getProduto:function(cod){
         return this.listaProdutos.find(u =>{return u.cod == cod})
