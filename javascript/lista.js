@@ -10,9 +10,7 @@
 
 let armazenamento = JSON.parse(localStorage.getItem('cadProdutos'))
 armazenamento.forEach(element => {
-  console.log('rodei')
   var corpoTabela = document.getElementById('produtosLista')
-  console.log(corpoTabela)
   var linha = `<tr>
                 <td>${element.cod}</td>
                 <td>${element.nome}</td>
@@ -22,4 +20,5 @@ armazenamento.forEach(element => {
                 <td>${element.ativo}</td>
                 <td> <button onclick="carregarProdutos(${element.cod})">Editar</button></td>
               </tr>`;
+  corpoTabela.innerHTML += linha
 });
