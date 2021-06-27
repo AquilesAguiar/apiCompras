@@ -18,11 +18,11 @@
         <input type="number" disabled name="cod" id="cod">
         <br>
         <label for="nome">Nome Produto:</label>
-        <input required type="text" name="nome" id="nome">
+        <input type="text" name="nome" id="nome">
         <br>
         <label for="unid">Unidade:</label>
         <select id="unid">
-            <option select value="">Vazio</option>
+            <option select value=""></option>
             <option value="un">Unidade</option>
             <option value="kg">Quiligrama</option>
             <option value="lt">Litro</option>
@@ -31,10 +31,10 @@
         </select>
         <br>
         <label for="quant">Quantidade:</label>
-        <input required type="number" name="quant" id="quant">
+        <input type="number" name="quant" id="quant">
         <br>
         <label for="codBarras">Código de Barras:</label>
-        <input type="number" name="codBarras" id="codBarras" placeholder="1234567891234" min="9999999999999" max="9999999999999">
+        <input type="number" name="codBarras" id="codBarras"  placeholder="O código precisa de 13 caracteres para ser valido">
         <br>
         <label for="ativo">Ativo:</label>
         <input type="checkbox" name="ativo" id="ativo">

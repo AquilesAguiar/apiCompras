@@ -1,4 +1,4 @@
-function cadProdutos(cod,nome,unid,quant,codBarras,ativo) {
+function listaProdutos(cod,nome,unid,quant,codBarras,ativo) {
     this.cod = cod
     this.nome = nome
     this.unid = unid
@@ -10,15 +10,19 @@ function cadProdutos(cod,nome,unid,quant,codBarras,ativo) {
 var controleProdutos = {
     listaProdutos:[],
     getListaProdutos:function(){
-        if(!localStorage.getItem('cadProdutos')){
+        if(!localStorage.getItem('listaProdutos')){
             this.setListaProdutos()
+            this.SetlistaCompras()
             return this.listaProdutos
         }
-        this.listaProdutos = JSON.parse(localStorage.getItem('cadProdutos'))
+        this.listaProdutos = JSON.parse(localStorage.getItem('listaProdutos'))
         return this.listaProdutos
     },
     setListaProdutos:function(){
-        localStorage.setItem('cadProdutos',JSON.stringify(this.listaProdutos))
+        localStorage.setItem('listaProdutos',JSON.stringify(this.listaProdutos))
+    },
+    SetlistaCompras:function(){
+        localStorage.setItem('SetlistaCompras',JSON.stringify(this.listaProdutos))
     },
     getProduto:function(cod){
         return this.listaProdutos.find(u =>{return u.cod == cod})
@@ -41,7 +45,8 @@ var controleProdutos = {
             produto.cod = count+1
             this.listaProdutos.push(produto)
         }
-        this.setListaProdutos()        
+        this.setListaProdutos()
+        this.SetlistaCompras()        
     },
     excluirProduto:function(cod){
         this.getListaProdutos();
@@ -50,6 +55,7 @@ var controleProdutos = {
             this.listaProdutos.splice(index,1)
         }
         this.setListaProdutos()
+        this.SetlistaCompras()
     }
 }
 function carregarLista(){
@@ -58,7 +64,7 @@ function carregarLista(){
     var linha = '';
     for(let i = 0; i < lista.length; i++){
         var {cod,nome,unid,quant,codBarras,ativo} = lista[i];
-        if (ativo){
+        if (ativo === true){
             ativo = "Ativo"
         }
         else{
@@ -86,10 +92,12 @@ function salvar(){
     let codBarras = document.getElementById('codBarras')
     let ativo = document.getElementById('ativo')
 
-    let p = new cadProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,codBarras.value,ativo.value)
-    controleProdutos.salvarProduto(p)
-    carregarLista()
-    novo()
+    if(nome.value != "" && unid.value != "" && quant.value != ""){
+        let p = new listaProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,codBarras.value,ativo.checked)
+        controleProdutos.salvarProduto(p)
+        carregarLista()
+        novo()
+    }
 }
 
 function novo(){
@@ -98,7 +106,7 @@ function novo(){
     document.getElementById('unid').value = ""
     document.getElementById('quant').value = ""
     document.getElementById('codBarras').value = ""
-    document.getElementById('ativo').value = ""
+    document.getElementById('ativo').checked = false
 }
 
 function excluir(){
@@ -115,7 +123,11 @@ function carregarProdutos(codigo){
     document.getElementById('unid').value = p.unid
     document.getElementById('quant').value = p.quant
     document.getElementById('codBarras').value = p.codBarras
-    document.getElementById('ativo')= p.ativo
-
+    if(p.ativo === true){
+        document.getElementById('ativo').checked = true
+    }
+    else{
+        document.getElementById('ativo').checked = false
+    }
     
 }
