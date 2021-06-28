@@ -1,7 +1,4 @@
-select{
-    width: 40px !important;
-}
-label{
-    display: inline-block;
-    width: 50px;
+tr.risca,
+tr.risca td {
+    background: transparent url('http://davidrhysthomas.co.uk/linked/strike.png') 0 50% repeat-x;
 }

@@ -4,14 +4,15 @@ armazenamento.forEach(element => {
     if(element.ativo === true) {
       let inputId = "inputCodigo" + element.cod
       let checkboxId = "checkboxCodigo" + element.cod
-      var linha = `<tr>
-                      <td>${element.cod}</td>
-                      <td>${element.nome}</td>
-                      <td>${element.unid}</td>
-                      <td>${element.quant}</td>
-                      <td><input type="number" id="${inputId}" onchange="atualizaValor(${element.cod}, ${element.quant})"></td>
-                      <td><input type="checkbox" disabled id="${checkboxId}"></td>
-                  </tr>`
+      var linha = `<tr id="linhaTable">
+                    <td>${element.cod}</td>
+                    <td>${element.nome}</td>
+                    <td>${element.unid}</td>
+                    <td>${element.quant}</td>
+                    <td><input type="number" id="${inputId}" onchange="atualizaValor(${element.cod}, ${element.quant})"></td>
+                    <td><input type="checkbox" disabled id="${checkboxId}"></td>
+                  </tr>
+                  `
       corpoTabela.innerHTML += linha
     }
 })
