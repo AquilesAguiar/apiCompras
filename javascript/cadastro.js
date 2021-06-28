@@ -6,6 +6,15 @@ function listaProdutos(cod,nome,unid,quant,codBarras,ativo) {
     this.codBarras = codBarras
     this.ativo = ativo
 }
+function listaProdutos(cod,nome,unid,quant,codBarras,ativo,coletado) {
+    this.cod = cod
+    this.nome = nome
+    this.unid = unid
+    this.quant = quant
+    this.codBarras = codBarras
+    this.ativo = ativo
+    this.coletado = coletado
+}
 var controleProdutos = {
     listaProdutos:[],
     listaCompras:[],
@@ -120,7 +129,7 @@ function salvar(){
 
     if(nome.value != "" && unid.value != "" && quant.value != ""){
         let p = new listaProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,codBarras.value,ativo.checked)
-        let c = new listaProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,0,false)
+        let c = new listaProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,0,ativo.checked,false)
         controleProdutos.salvarProduto(p,c)
         carregarLista()
         novo()
