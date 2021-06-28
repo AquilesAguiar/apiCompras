@@ -11,7 +11,6 @@ armazenamento.forEach(element => {
                       <td>${element.quant}</td>
                       <td><input type="number" id="${inputId}" onchange="atualizaValor(${element.cod}, ${element.quant})"></td>
                       <td><input type="checkbox" disabled id="${checkboxId}"></td>
-                      <td> <button onclick="">Editar</button></td>
                   </tr>`
       corpoTabela.innerHTML += linha
     }

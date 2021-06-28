@@ -6,31 +6,40 @@ function listaProdutos(cod,nome,unid,quant,codBarras,ativo) {
     this.codBarras = codBarras
     this.ativo = ativo
 }
-
 var controleProdutos = {
     listaProdutos:[],
+    listaCompras:[],
     getListaProdutos:function(){
         if(!localStorage.getItem('listaProdutos')){
             this.setListaProdutos()
-            this.SetlistaCompras()
             return this.listaProdutos
         }
         this.listaProdutos = JSON.parse(localStorage.getItem('listaProdutos'))
         return this.listaProdutos
     },
+    getListaCompras:function(){
+        if(!localStorage.getItem('listaCompras')){
+            this.setlistaCompras()
+            return this.listaCompras
+        }
+        this.listaCompras = JSON.parse(localStorage.getItem('listaCompras'))
+        return this.listaCompras
+    },
     setListaProdutos:function(){
         localStorage.setItem('listaProdutos',JSON.stringify(this.listaProdutos))
     },
-    SetlistaCompras:function(){
-        localStorage.setItem('listaCompras',JSON.stringify(this.listaProdutos))
+    setlistaCompras:function(){
+        localStorage.setItem('listaCompras',JSON.stringify(this.listaCompras))
     },
     getProduto:function(cod){
         return this.listaProdutos.find(u =>{return u.cod == cod})
     },
-    salvarProduto:function(produto){
+    salvarProduto:function(produto,compra){
         this.getListaProdutos()
+        this.getListaCompras()
        
         if(produto.cod > 0){
+            // Cadastro
             let u = this.listaProdutos.find(u =>{return u.cod == produto.cod})
             u.cod = produto.cod
             u.nome = produto.nome
@@ -38,24 +47,41 @@ var controleProdutos = {
             u.ativo = produto.ativo
             u.quant = produto.quant
             u.unid = produto.unid
+            // Lista Compra
+            let p = this.listaCompras.find(p =>{return p.cod == compra.cod})
+            p.cod = compra.cod
+            p.nome = compra.nome
+            p.codBarras = compra.codBarras
+            p.ativo = compra.ativo
+            p.quant = compra.quant
+            p.unid = compra.unid
         }
         else{
+            // Cadastro
             let count = 0
             this.listaProdutos.forEach(x=>{count = Math.max(count,x.cod)})
             produto.cod = count+1
             this.listaProdutos.push(produto)
+
+            // Lista Compra
+            let count2 = 0
+            this.listaCompras.forEach(x=>{count2 = Math.max(count2,x.cod)})
+            compra.cod = count2+1
+            this.listaCompras.push(compra)
         }
         this.setListaProdutos()
-        this.SetlistaCompras()        
+        this.setlistaCompras()        
     },
     excluirProduto:function(cod){
-        this.getListaProdutos();
+        this.getListaProdutos()
+        this.getListaCompras()
         let index =  this.listaProdutos.findIndex(p=>{return p.cod == cod})
         if(index>=0){
             this.listaProdutos.splice(index,1)
+            this.listaCompras.splice(index,1)
         }
         this.setListaProdutos()
-        this.SetlistaCompras()
+        this.setlistaCompras()
     }
 }
 function carregarLista(){
@@ -94,7 +120,8 @@ function salvar(){
 
     if(nome.value != "" && unid.value != "" && quant.value != ""){
         let p = new listaProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,codBarras.value,ativo.checked)
-        controleProdutos.salvarProduto(p)
+        let c = new listaProdutos(cod.value != "" ? parseInt(cod.value) : 0, nome.value, unid.value,quant.value,0,false)
+        controleProdutos.salvarProduto(p,c)
         carregarLista()
         novo()
     }
