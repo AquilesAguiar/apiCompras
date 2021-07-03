@@ -44,3 +44,22 @@ function atualizaValor(cod, quantidade) {
   }
   localStorage.setItem('listaCompras', JSON.stringify(armazenamento))
 }
+
+function salvar(){
+  let link = "https://60d22ab5858b410017b2d468.mockapi.io/produto"
+  let metodo = 'post';
+    fetch(link,{
+      method: metodo,
+      body: JSON.stringify(armazenamento),
+      headers: {'Content-Type': 'application/json'}
+    }
+    ).then(function(response) {
+        if (response.ok){
+            return response.json();
+        }
+    }).catch (function (error) {
+        console.log('Deu ERRO:', error);
+    });
+  
+    
+}

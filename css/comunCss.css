@@ -1,4 +1,8 @@
 tr.risca,
 tr.risca td {
     background: transparent url('http://davidrhysthomas.co.uk/linked/strike.png') 0 50% repeat-x;
+    color: black;
+}
+.marginButton{
+    margin-right: 20px;
 }

@@ -113,7 +113,7 @@ function carregarLista(){
                     <td>${quant}</td>
                     <td>${codBarras}</td>
                     <td>${ativo}</td>
-                    <td> <button onclick="carregarProdutos(${cod})">Editar</button></td>
+                    <td> <button onclick="carregarProdutos(${cod})" class="btn btn-primary">Editar</button></td>
                     </tr>`;
     }
     t1.innerHTML = linha;
