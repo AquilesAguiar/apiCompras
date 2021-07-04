@@ -56,26 +56,23 @@ function tudoColetado() {
   return retorno
 }
 
-function retornaUltimaPosicao() {
-  let retorno = 0;
-  fetch(LINK+"Compras"
-  ).then(function(response) {
-      response.json.forEach(elemento => {
-        retorno = response.json.CodCompras
-      })
-  }).catch (function (error) {
-      console.log('Deu ERRO:', error);
-  });
+function trataDados(dadosCompras, dadosProdutos, posicao) {
+  let retorno = {}
+  retorno.Nome = dadosCompras[posicao].nome
+  retorno.Unidade = dadosCompras[posicao].unid
+  retorno.Quantidade = dadosCompras[posicao].quant
+  retorno.CodigoBarra = dadosProdutos[posicao].codBarras
+  retorno.Ativo = dadosProdutos[posicao].ativo
+  retorno.QuantComprada = dadosCompras[posicao].codBarras
   return retorno
 }
 
 function salvar(){
-  let metodo = 'post';
-  let data = Date.now()
+  let metodo = 'POST';
+  let data = new Date().getTime()
   fetch(LINK+"Compras",{
     method: metodo,
-    body: data,
-    headers: {'Content-Type': 'application/json'}
+    body: data
   }
   ).then(function(response) {
       if (response.ok){
@@ -85,17 +82,19 @@ function salvar(){
       console.log('Deu ERRO:', error);
   });
 
-  console.log(LINK +  + retornaUltimaPosicao() + "/Produtos")
-  fetch(LINK + retornaUltimaPosicao() + "/Produtos",{
-    method: metodo,
-    body: JSON.stringify(armazenamentoLista),
-    headers: {'Content-Type': 'application/json'}
+  for(let x = 0; x < armazenamentoCadastro.length; x++) {
+    fetch(LINK + "Compras/" + 1 + "/Produtos",{
+      method: metodo,
+      body: JSON.stringify(trataDados(armazenamentoLista, armazenamentoCadastro, x)),
+      headers: {'Content-Type': 'application/json'}
+    }
+    ).then(function(response) {
+        if (response.ok){
+            return response.json();
+        }
+    }).catch (function (error) {
+        console.log('Deu ERRO:', error);
+    });
   }
-  ).then(function(response) {
-      if (response.ok){
-          return response.json();
-      }
-  }).catch (function (error) {
-      console.log('Deu ERRO:', error);
-  });
+  
 }
